@@ -39,8 +39,14 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
 jspm_packages/
+
+client/node_modules/
+client/.angular/
+client/.vscode/
+client/node_modules/
+server/bin/
+server/JobPortal.csproj
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

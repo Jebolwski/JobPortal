@@ -1,0 +1,14 @@
+version: "3"
+services:
+  db:
+    image: "postgres:latest"
+    container_name: "job_portal"
+    environment:
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_USER: "admin"
+    ports:
+      - "5432:5432"
+    volumes:
+      - my_dbdata:/var/lib/clone/data
+volumes:
+  my_dbdata:
