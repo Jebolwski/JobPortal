@@ -13,6 +13,14 @@ import {
   FacebookLoginProvider,
 } from '@abacritt/angularx-social-login';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+
+const JWT_Module_Options: JwtModuleOptions = {
+  config: {
+    tokenGetter: undefined,
+  },
+};
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [
@@ -20,6 +28,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     AppRoutingModule,
     SocialLoginModule,
     GoogleSigninButtonModule,
+    HttpClientModule,
+    JwtModule.forRoot(JWT_Module_Options),
   ],
   providers: [
     {

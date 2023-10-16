@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qG9HDuXiX6wHnlwtgZWV2QoKMTYRiFlYV06wdGA9WjB9Oi/AVCQx8RSxfB3SM0+z6fMJYt2D3+fUPLMFnWS5uA==",
+  "dgSpecHash": "zZdlJx7Xf3g0Vk9cFVkmoH8GKSzvWVZMB+/C3A1iYULp2vGqbwGQDOQj58WiCy//UJxJ9BY/ZZUnNg5/XXc8Wg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mertg\\source\\repos\\JobPortal\\JobPortal\\JobPortal.csproj",
+  "projectFilePath": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\JobPortal\\server\\JobPortal.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mertg\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\mertg\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\6.0.23\\microsoft.aspnetcore.authentication.google.6.0.23.nupkg.sha512",
@@ -34,6 +34,7 @@
     "C:\\Users\\mertg\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.10.0\\microsoft.identitymodel.protocols.openidconnect.6.10.0.nupkg.sha512",
     "C:\\Users\\mertg\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.10.0\\microsoft.identitymodel.tokens.6.10.0.nupkg.sha512",
     "C:\\Users\\mertg\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\mertg\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\mertg\\.nuget\\packages\\npgsql\\6.0.10\\npgsql.6.0.10.nupkg.sha512",
     "C:\\Users\\mertg\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\6.0.22\\npgsql.entityframeworkcore.postgresql.6.0.22.nupkg.sha512",
     "C:\\Users\\mertg\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
