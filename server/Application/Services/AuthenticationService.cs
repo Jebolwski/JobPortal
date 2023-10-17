@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
 using JobPortal.Application.ViewModels.ResponseM;
+using System.ComponentModel;
 
 namespace JobPortal.Application.Services
 {
@@ -297,6 +298,27 @@ namespace JobPortal.Application.Services
                 statusCode = 400
             };
 
+        }
+
+        public ResponseViewModel addGoogleUser(GoogleCreateUserModel model)
+        {
+            User user = new User()
+            {
+                email = model.email,
+                firstName = model.firstName,
+                lastName = model.lastName,
+                googleUserId = model.googleUserId,
+                name = model.name,
+                photoUrl = model.photoUrl,
+                roleId = Guid.Parse("31c188f9-1f50-41cf-8b60-1401519d37f8")
+            };
+            userService.add(user);
+            return new ResponseViewModel()
+            {
+                message = "Kullanıcı başarıyla oluşturuldu. 🚀",
+                responseModel = new object(),
+                statusCode = 200,
+            };
         }
     }
 

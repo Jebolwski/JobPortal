@@ -22,6 +22,13 @@ namespace JobPortal.Controllers
             return authenticationService.Register(model);
         }
 
+        [HttpPost("add-user")]
+        public ResponseViewModel AddUser(GoogleCreateUserModel model)
+        {
+            return authenticationService.addGoogleUser(model);
+        }
+
+
         [HttpPost("login")]
         public ResponseViewModel Login(LoginModel model)
         {

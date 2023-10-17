@@ -12,5 +12,6 @@ namespace JobPortal.Application.Interfaces
         public ResponseViewModel RefreshToken(RefreshTokenModel model);
         public ResponseViewModel SearchByUsername(string name);
         public ResponseViewModel getUser(Guid id);
+        public ResponseViewModel addGoogleUser(GoogleCreateUserModel model);
     }
 }

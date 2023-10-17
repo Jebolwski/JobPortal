@@ -3,6 +3,7 @@ using System;
 using JobPortal.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JobPortal.Migrations
 {
     [DbContext(typeof(BaseContext))]
-    partial class BaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231017172130_user-update-1")]
+    partial class userupdate1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,9 +121,8 @@ namespace JobPortal.Migrations
                         .HasColumnType("text")
                         .HasColumnName("firstName");
 
-                    b.Property<string>("googleUserId")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("googleUserId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("lastName")
                         .IsRequired()

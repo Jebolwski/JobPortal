@@ -108,3 +108,4 @@ C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\JobPortal\server\obj\Debug\
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\JobPortal\server\obj\Debug\net6.0\JobPortal.pdb
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\JobPortal\server\obj\Debug\net6.0\JobPortal.genruntimeconfig.cache
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\JobPortal\server\obj\Debug\net6.0\ref\JobPortal.dll
+C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\JobPortal\server\bin\Debug\net6.0\Newtonsoft.Json.dll

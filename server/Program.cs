@@ -1,3 +1,5 @@
+using JobPortal.Application.Interfaces;
+using JobPortal.Application.Services;
 using JobPortal.Data.Context;
 using JobPortal.Data.Repositories;
 using JobPortal.Domain.Interfaces;
@@ -18,6 +20,9 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJobAdRepository, JobAdRepository>();
 
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
