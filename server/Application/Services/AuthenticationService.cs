@@ -312,7 +312,8 @@ namespace JobPortal.Application.Services
                 photoUrl = model.photoUrl,
                 roleId = Guid.Parse("31c188f9-1f50-41cf-8b60-1401519d37f8")
             };
-            userService.add(user);
+            User user1 = userService.add(user);
+            Console.WriteLine("geldi");
             return new ResponseViewModel()
             {
                 message = "Kullanıcı başarıyla oluşturuldu. 🚀",
