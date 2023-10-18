@@ -46,6 +46,7 @@ client/.angular/
 client/.vscode/
 client/node_modules/
 server/bin/
+server/.vs/
 server/JobPortal.csproj
 
 # Snowpack dependency directory (https://snowpack.dev/)
