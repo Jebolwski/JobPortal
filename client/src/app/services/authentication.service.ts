@@ -21,6 +21,8 @@ export class AuthenticationService {
   ) {
     this.externalAuthService.authState.subscribe((user) => {
       console.log(user);
+      console.log(user.idToken);
+
       this.AddUser({
         name: user.name,
         email: user.email,
@@ -28,6 +30,7 @@ export class AuthenticationService {
         lastName: user.lastName,
         photoUrl: user.photoUrl,
         googleUserId: user.id,
+        refreshToken: user.idToken,
       }).subscribe();
       this.extAuthChangeSub.next(user);
     });

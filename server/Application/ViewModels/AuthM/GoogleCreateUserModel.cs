@@ -8,5 +8,6 @@ namespace JobPortal.Application.ViewModels.AuthM
         public string lastName { get; set; }
         public string photoUrl { get; set; }
         public string googleUserId { get; set; }
+        public string refreshToken { get; set; }
     }
 }
