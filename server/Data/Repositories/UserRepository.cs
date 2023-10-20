@@ -32,7 +32,15 @@ namespace JobPortal.Data.Repositories
             }
             return null;
         }
-
+        public User getUserByGoogleId(string googleUserId)
+        {
+            IQueryable<User> users = dbset.Where(p => p.googleUserId == googleUserId);
+            if (users != null && users.Any())
+            {
+                return users.First();
+            }
+            return null;
+        }
 
     }
 }

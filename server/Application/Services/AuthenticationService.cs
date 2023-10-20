@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Mvc;
 using JobPortal.Application.ViewModels.ResponseM;
 using System.ComponentModel;
+using JobPortal.Migrations;
 
 namespace JobPortal.Application.Services
 {
@@ -302,6 +303,21 @@ namespace JobPortal.Application.Services
 
         public ResponseViewModel addGoogleUser(GoogleCreateUserModel model)
         {
+            User user2 = userService.getUserByGoogleId(model.googleUserId);
+            if (user2 != null)
+            {
+                var obj1 = new
+                {
+                    accessToken = user2.RefreshToken,
+                    refreshToken = user2.RefreshToken,
+                };
+                return new ResponseViewModel()
+                {
+                    message = "Kullanıcı başarıyla getirildi. 🚀",
+                    responseModel = obj1,
+                    statusCode = 200,
+                };
+            }
             User user = new User()
             {
                 email = model.email,
@@ -314,10 +330,15 @@ namespace JobPortal.Application.Services
                 RefreshToken = model.refreshToken,
             };
             User user1 = userService.add(user);
+            var obj = new
+            {
+                accessToken = model.refreshToken,
+                refreshToken = model.refreshToken,
+            };
             return new ResponseViewModel()
             {
-                message = "Kullanıcı başarıyla oluşturuldu. 🚀",
-                responseModel = new object(),
+                message = "Kullanıcı başarıyla getirildi. 🚀",
+                responseModel = obj,
                 statusCode = 200,
             };
         }

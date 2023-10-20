@@ -5,6 +5,9 @@ import { Subject, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Response } from '../interfaces/Response';
+import jwt_decode from 'jwt-decode';
+import { User } from '../interfaces/User';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,16 +16,15 @@ export class AuthenticationService {
   private extAuthChangeSub = new Subject<SocialUser>();
   public authChanged = this.authChangeSub.asObservable();
   public extAuthChanged = this.extAuthChangeSub.asObservable();
+  public user!: User;
   private baseApiUrl: string = 'https://localhost:7179/api/';
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
-    private externalAuthService: SocialAuthService
+    private externalAuthService: SocialAuthService,
+    private router: Router
   ) {
     this.externalAuthService.authState.subscribe((user) => {
-      console.log(user);
-      console.log(user.idToken);
-
       this.AddUser({
         name: user.name,
         email: user.email,
@@ -31,7 +33,12 @@ export class AuthenticationService {
         photoUrl: user.photoUrl,
         googleUserId: user.id,
         refreshToken: user.idToken,
-      }).subscribe();
+      }).subscribe((res) => {
+        localStorage.setItem('accessToken', res.accessToken);
+        user = jwt_decode(res.accessToken);
+        console.log(user);
+        router.navigate(['/home']);
+      });
       this.extAuthChangeSub.next(user);
     });
   }
@@ -48,8 +55,6 @@ export class AuthenticationService {
         map((response: any) => {
           let res: Response = response;
           if (res.statusCode === 200) {
-            console.log('grazie');
-
             return res.responseModel;
           } else {
             alert('HATA');

@@ -15,6 +15,7 @@ import {
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+import { HomeComponent } from './components/home/home.component';
 
 const JWT_Module_Options: JwtModuleOptions = {
   config: {
@@ -22,7 +23,7 @@ const JWT_Module_Options: JwtModuleOptions = {
   },
 };
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

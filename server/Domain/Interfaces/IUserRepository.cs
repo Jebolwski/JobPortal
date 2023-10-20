@@ -6,5 +6,6 @@ namespace JobPortal.Domain.Interfaces
     {
         public User getUserByUsername(string name);
         public User getUserByRefreshToken(string token);
+        public User getUserByGoogleId(string googleUserId);
     }
 }
