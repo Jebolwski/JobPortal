@@ -160,7 +160,7 @@ namespace JobPortal.Application.Services
             var refreshToken = new RefreshToken
             {
                 Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddHours(1),
                 Created = DateTime.UtcNow
             };
 
@@ -192,6 +192,7 @@ namespace JobPortal.Application.Services
                 }
                 else if (user.TokenExpires < DateTime.UtcNow)
                 {
+                    System.Console.WriteLine(user.TokenExpires.ToString(), DateTime.UtcNow);
                     return new ResponseViewModel()
                     {
                         message = "Tokenin süresi geçmiş. 😐",
@@ -328,6 +329,8 @@ namespace JobPortal.Application.Services
                 photoUrl = model.photoUrl,
                 roleId = Guid.Parse("31c188f9-1f50-41cf-8b60-1401519d37f8"),
                 RefreshToken = model.refreshToken,
+                TokenExpires = model.tokenExpires,
+                TokenCreated = model.tokenCreated,
             };
             User user1 = userService.add(user);
             var obj = new

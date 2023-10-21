@@ -25,6 +25,7 @@ export class AuthenticationService {
     private router: Router
   ) {
     this.externalAuthService.authState.subscribe((user) => {
+      let user_tmp: any = jwt_decode(user.idToken);
       this.AddUser({
         name: user.name,
         email: user.email,
@@ -33,11 +34,13 @@ export class AuthenticationService {
         photoUrl: user.photoUrl,
         googleUserId: user.id,
         refreshToken: user.idToken,
+        tokenExpires: user_tmp.exp,
+        tokenCreated: user_tmp.iat,
       }).subscribe((res) => {
         localStorage.setItem('accessToken', res.accessToken);
-        user = jwt_decode(res.accessToken);
-        console.log(user);
-        router.navigate(['/home']);
+        localStorage.setItem('refreshToken', res.accessToken);
+        this.user = jwt_decode(res.accessToken);
+        router.navigate(['/']);
       });
       this.extAuthChangeSub.next(user);
     });
@@ -63,10 +66,30 @@ export class AuthenticationService {
       );
   }
 
+  public refreshToken(data: any) {
+    return this.http
+      .post(this.baseApiUrl + 'Authentication/refresh-token', data)
+      .subscribe((response: any) => {
+        let res: Response = response;
+        if (res.statusCode === 200) {
+          console.log(res);
+        } else {
+          console.log('hata');
+        }
+      });
+  }
+
   public signInWithGoogle = () => {
     this.externalAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   };
+
   public signOutExternal = () => {
     this.externalAuthService.signOut();
   };
+
+  public logout() {
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/login']);
+  }
 }

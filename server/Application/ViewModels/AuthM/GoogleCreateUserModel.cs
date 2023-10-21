@@ -9,5 +9,7 @@ namespace JobPortal.Application.ViewModels.AuthM
         public string photoUrl { get; set; }
         public string googleUserId { get; set; }
         public string refreshToken { get; set; }
+        public DateTime tokenExpires { get; set; }
+        public DateTime tokenCreated { get; set; }
     }
 }
