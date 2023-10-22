@@ -14,7 +14,6 @@ export class NotLoggedService {
     if (
       !(
         localStorage.getItem('accessToken') != null &&
-        localStorage.getItem('refreshToken') != null &&
         jwt_decode(localStorage.getItem('accessToken') || '') != null
       )
     ) {

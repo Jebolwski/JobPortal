@@ -26,6 +26,7 @@ export class AuthenticationService {
   ) {
     this.externalAuthService.authState.subscribe((user) => {
       let user_tmp: any = jwt_decode(user.idToken);
+
       this.AddUser({
         name: user.name,
         email: user.email,
@@ -34,11 +35,10 @@ export class AuthenticationService {
         photoUrl: user.photoUrl,
         googleUserId: user.id,
         refreshToken: user.idToken,
-        tokenExpires: user_tmp.exp,
-        tokenCreated: user_tmp.iat,
+        tokenExpires: new Date(user_tmp.exp * 1000),
+        tokenCreated: new Date(user_tmp.iat * 1000),
       }).subscribe((res) => {
         localStorage.setItem('accessToken', res.accessToken);
-        localStorage.setItem('refreshToken', res.accessToken);
         this.user = jwt_decode(res.accessToken);
         router.navigate(['/']);
       });

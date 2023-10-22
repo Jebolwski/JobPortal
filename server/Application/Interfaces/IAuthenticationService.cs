@@ -13,5 +13,6 @@ namespace JobPortal.Application.Interfaces
         public ResponseViewModel SearchByUsername(string name);
         public ResponseViewModel getUser(Guid id);
         public ResponseViewModel addGoogleUser(GoogleCreateUserModel model);
+        public bool deleteUser(Guid id);
     }
 }

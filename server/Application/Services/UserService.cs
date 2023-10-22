@@ -38,11 +38,16 @@ namespace JobPortal.Application.Services
             return userRepository.getUserByGoogleId(GoogleId);
         }
 
-
         public User add(User user)
         {
             return userRepository.add(user);
         }
+
+        public bool delete(Guid id)
+        {
+            return userRepository.delete(id);
+        }
+
 
         public User get(Guid id)
         {

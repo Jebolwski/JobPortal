@@ -52,5 +52,11 @@ namespace JobPortal.Controllers
         {
             return authenticationService.getUser(userId);
         }
+
+        [HttpDelete("{userId}")]
+        public bool delete(Guid userId)
+        {
+            return authenticationService.deleteUser(userId);
+        }
     }
 }

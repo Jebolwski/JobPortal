@@ -10,5 +10,6 @@ namespace JobPortal.Application.Interfaces
         public User add(User user);
         public User get(Guid id);
         public User getUserByGoogleId(string GoogleId);
+        public bool delete(Guid id);
     }
 }

@@ -13,7 +13,6 @@ export class LoggedService {
     let flag: boolean = false;
     if (
       localStorage.getItem('accessToken') != null &&
-      localStorage.getItem('refreshToken') != null &&
       jwt_decode(localStorage.getItem('accessToken') || '') != null
     ) {
       this.auth.user = jwt_decode(localStorage.getItem('accessToken') || '');

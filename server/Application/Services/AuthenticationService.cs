@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using JobPortal.Application.ViewModels.ResponseM;
 using System.ComponentModel;
 using JobPortal.Migrations;
+using JobPortal.Data.Repositories;
 
 namespace JobPortal.Application.Services
 {
@@ -307,10 +308,13 @@ namespace JobPortal.Application.Services
             User user2 = userService.getUserByGoogleId(model.googleUserId);
             if (user2 != null)
             {
+
+                user2.TokenCreated = model.tokenCreated;
+                user2.TokenExpires = model.tokenExpires;
+                User user3 = userService.update(user2);
                 var obj1 = new
                 {
-                    accessToken = user2.RefreshToken,
-                    refreshToken = user2.RefreshToken,
+                    accessToken = user3.RefreshToken,
                 };
                 return new ResponseViewModel()
                 {
@@ -345,6 +349,12 @@ namespace JobPortal.Application.Services
                 statusCode = 200,
             };
         }
+
+        public bool deleteUser(Guid id)
+        {
+            return userService.delete(id);
+        }
+
     }
 
 }
