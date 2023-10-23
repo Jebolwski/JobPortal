@@ -73,6 +73,8 @@ export class AuthenticationService {
         let res: Response = response;
         if (res.statusCode === 200) {
           console.log(res);
+        } else if (res.statusCode === 401) {
+          this.logout();
         } else {
           console.log('hata');
         }
