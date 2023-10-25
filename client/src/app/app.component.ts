@@ -10,6 +10,8 @@ export class AppComponent {
   title = 'client';
 
   constructor(private auth: AuthenticationService) {
-    auth.refreshToken({ reftoken: localStorage.getItem('accessToken') });
+    setInterval(() => {
+      auth.refreshToken({ reftoken: localStorage.getItem('refreshToken') });
+    }, 16000);
   }
 }

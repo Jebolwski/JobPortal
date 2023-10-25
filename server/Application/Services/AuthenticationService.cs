@@ -89,7 +89,7 @@ namespace JobPortal.Application.Services
                 passwordHash = passwordHash,
                 passwordSalt = passwordSalt,
                 TokenCreated = DateTime.UtcNow,
-                TokenExpires = DateTime.UtcNow.AddMinutes(60),
+                TokenExpires = DateTime.UtcNow.AddMinutes(10),
                 roleId = roleService.getRole("Normal User").id
             };
 
@@ -138,7 +138,7 @@ namespace JobPortal.Application.Services
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(60),
+                expires: DateTime.UtcNow.AddMinutes(10),
                 signingCredentials: creds
 
             );
@@ -161,7 +161,7 @@ namespace JobPortal.Application.Services
             var refreshToken = new RefreshToken
             {
                 Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-                Expires = DateTime.UtcNow.AddDays(4),
+                Expires = DateTime.UtcNow.AddDays(90),
                 Created = DateTime.UtcNow
             };
             return refreshToken;
@@ -207,7 +207,7 @@ namespace JobPortal.Application.Services
                 var obj = new
                 {
                     accessToken = token,
-                    refreshToken = newRefreshToken,
+                    refreshToken = newRefreshToken.Token,
                 };
                 return new ResponseViewModel()
                 {
@@ -306,14 +306,16 @@ namespace JobPortal.Application.Services
             User user2 = userService.getUserByGoogleId(model.googleUserId);
             if (user2 != null)
             {
-
-                user2.TokenCreated = model.tokenCreated;
-                user2.TokenExpires = model.tokenExpires;
-                user2.RefreshToken = model.refreshToken;
+                RefreshToken refreshO = GenerateRefreshToken();
+                user2.TokenCreated = refreshO.Created;
+                user2.TokenExpires = refreshO.Expires;
+                user2.RefreshToken = refreshO.Token;
                 User user3 = userService.update(user2);
+                string v = CreateToken(user3);
                 var obj1 = new
                 {
-                    accessToken = user3.RefreshToken,
+                    accessToken = v,
+                    refreshToken = user3.RefreshToken,
                 };
                 return new ResponseViewModel()
                 {

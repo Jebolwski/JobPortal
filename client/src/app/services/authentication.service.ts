@@ -39,6 +39,7 @@ export class AuthenticationService {
         tokenCreated: new Date(user_tmp.iat * 1000),
       }).subscribe((res) => {
         localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
         this.user = jwt_decode(res.accessToken);
         router.navigate(['/']);
       });
@@ -66,13 +67,14 @@ export class AuthenticationService {
       );
   }
 
-  public refreshToken(data: any) {
-    return this.http
+  public refreshToken(data: any): void {
+    this.http
       .post(this.baseApiUrl + 'Authentication/refresh-token', data)
       .subscribe((response: any) => {
         let res: Response = response;
         if (res.statusCode === 200) {
-          console.log(res);
+          localStorage.setItem('accessToken', res.responseModel.accessToken);
+          localStorage.setItem('refreshToken', res.responseModel.refreshToken);
         } else if (res.statusCode === 401) {
           this.logout();
         } else {
