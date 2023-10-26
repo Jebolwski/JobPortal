@@ -17,6 +17,7 @@ export class AuthenticationService {
   public authChanged = this.authChangeSub.asObservable();
   public extAuthChanged = this.extAuthChangeSub.asObservable();
   public user!: User;
+  public user_id!: string;
   private baseApiUrl: string = 'https://localhost:7179/api/';
   constructor(
     private http: HttpClient,
@@ -24,9 +25,10 @@ export class AuthenticationService {
     private externalAuthService: SocialAuthService,
     private router: Router
   ) {
+    this.getUserById(this.user_id).subscribe();
+
     this.externalAuthService.authState.subscribe((user) => {
       let user_tmp: any = jwt_decode(user.idToken);
-
       this.AddUser({
         name: user.name,
         email: user.email,
@@ -40,11 +42,31 @@ export class AuthenticationService {
       }).subscribe((res) => {
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
-        this.user = jwt_decode(res.accessToken);
+        let user1: any = jwt_decode(res.accessToken);
+        this.user_id =
+          user1[
+            'http://schemas.microsoft.com/ws/2008/06/identity/claims/groupsid'
+          ];
+        this.getUserById(this.user_id).subscribe();
         router.navigate(['/']);
       });
       this.extAuthChangeSub.next(user);
     });
+  }
+
+  getUserById(id: string) {
+    return this.http
+      .get(this.baseApiUrl + 'Authentication/get-user/' + id)
+      .pipe(
+        map((response: any) => {
+          let res: Response = response;
+          if (res.statusCode === 200) {
+            this.user = res.responseModel;
+          } else {
+            console.log('hata');
+          }
+        })
+      );
   }
 
   AddUser(data: any) {

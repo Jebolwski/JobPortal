@@ -129,6 +129,7 @@ namespace JobPortal.Application.Services
             {
                 new Claim(ClaimTypes.Name, user.name),
                 new Claim(ClaimTypes.Role, roleService.get(user.roleId).name),
+                new Claim(ClaimTypes.GroupSid, Convert.ToString(user.id)),
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
@@ -264,39 +265,37 @@ namespace JobPortal.Application.Services
 
         public ResponseViewModel getUser(Guid id)
         {
-            if (id != null)
+            User user = userService.get(id);
+            if (user == null)
             {
-                User user = userService.get(id);
-                if (user == null)
-                {
-                    return new ResponseViewModel()
-                    {
-                        message = "Kullanıcı bulunmadı. 😶",
-                        responseModel = new Object(),
-                        statusCode = 400
-                    };
-                }
-
-                UserResponseModel userResponseModel = new UserResponseModel()
-                {
-                    id = user.id,
-                    TokenCreated = user.TokenCreated,
-                    name = user.name,
-                    roleId = user.roleId,
-                    TokenExpires = user.TokenExpires
-                };
                 return new ResponseViewModel()
                 {
-                    statusCode = 200,
-                    message = "Kullanıcı getirildi. 🥰",
-                    responseModel = userResponseModel
+                    message = "Kullanıcı bulunmadı. 😶",
+                    responseModel = new Object(),
+                    statusCode = 400
                 };
             }
+
+            UserResponseModel userResponseModel = new UserResponseModel()
+            {
+                id = user.id,
+                TokenCreated = user.TokenCreated,
+                name = user.name,
+                roleId = user.roleId,
+                TokenExpires = user.TokenExpires,
+                firstName = user.firstName,
+                lastName = user.lastName,
+                email = user.email,
+                gender = user.gender,
+                googleUserId = user.googleUserId,
+                photoUrl = user.photoUrl,
+                RefreshToken = user.RefreshToken
+            };
             return new ResponseViewModel()
             {
-                message = "Veri girilmedi.",
-                responseModel = new Object(),
-                statusCode = 400
+                statusCode = 200,
+                message = "Kullanıcı getirildi. 🥰",
+                responseModel = userResponseModel
             };
 
         }
@@ -333,9 +332,9 @@ namespace JobPortal.Application.Services
                 name = model.name,
                 photoUrl = model.photoUrl,
                 roleId = Guid.Parse("31c188f9-1f50-41cf-8b60-1401519d37f8"),
-                RefreshToken = model.refreshToken,
-                TokenExpires = model.tokenExpires,
-                TokenCreated = model.tokenCreated,
+                RefreshToken = GenerateRefreshToken().Token,
+                TokenExpires = GenerateRefreshToken().Expires,
+                TokenCreated = GenerateRefreshToken().Created,
             };
             User user1 = userService.add(user);
             var obj = new

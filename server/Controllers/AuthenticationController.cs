@@ -28,6 +28,11 @@ namespace JobPortal.Controllers
             return authenticationService.addGoogleUser(model);
         }
 
+        [HttpGet("get-user/{id}")]
+        public ResponseViewModel getUser(Guid id)
+        {
+            return authenticationService.getUser(id);
+        }
 
         [HttpPost("login")]
         public ResponseViewModel Login(LoginModel model)

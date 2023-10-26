@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class HomeComponent {
   constructor(public authentication: AuthenticationService) {
-    console.log(authentication.user);
+    console.log(authentication.user_id, 'messi');
+    console.log(authentication.user, 'messi');
   }
 }

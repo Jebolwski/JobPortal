@@ -12,6 +12,6 @@ export class AppComponent {
   constructor(private auth: AuthenticationService) {
     setInterval(() => {
       auth.refreshToken({ reftoken: localStorage.getItem('refreshToken') });
-    }, 16000);
+    }, 52000);
   }
 }
