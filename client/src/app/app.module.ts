@@ -16,14 +16,20 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
 import { HomeComponent } from './components/home/home.component';
-
+import { RegisterComponent } from './components/register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 const JWT_Module_Options: JwtModuleOptions = {
   config: {
     tokenGetter: undefined,
   },
 };
 @NgModule({
-  declarations: [AppComponent, LoginComponent, HomeComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    HomeComponent,
+    RegisterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,6 +37,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     GoogleSigninButtonModule,
     HttpClientModule,
     JwtModule.forRoot(JWT_Module_Options),
+    ReactiveFormsModule,
   ],
   providers: [
     {

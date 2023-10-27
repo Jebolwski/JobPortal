@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoggedService } from './services/logged.service';
 import { NotLoggedService } from './services/notlogged.service';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,12 @@ const routes: Routes = [
     component: HomeComponent,
     title: 'Ev',
     canActivate: [LoggedService],
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    title: 'Ev',
+    canActivate: [NotLoggedService],
   },
 ];
 

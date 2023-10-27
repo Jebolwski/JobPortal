@@ -1,0 +1,30 @@
+<p>register works!</p>
+<form (submit)="register(registerForm.value)" [formGroup]="registerForm">
+  <div>
+    <input type="text" placeholder="ad" formControlName="firstName" />
+  </div>
+  <div>
+    <input type="text" placeholder="soyad" formControlName="lastName" />
+  </div>
+  <select formControlName="gender">
+    <option value="Erkek">Erkek</option>
+    <option value="Kadın">Kadın</option>
+  </select>
+  <div>
+    <input type="password" placeholder="şifre" formControlName="password" />
+  </div>
+  <div>
+    <input
+      type="password"
+      placeholder="şifre yeniden"
+      formControlName="password1"
+    />
+  </div>
+  <div>
+    <input type="email" placeholder="email" formControlName="email" />
+  </div>
+  <div>
+    <input type="text" placeholder="pp linki" formControlName="photoUrl" />
+  </div>
+  <input type="submit" />
+</form>

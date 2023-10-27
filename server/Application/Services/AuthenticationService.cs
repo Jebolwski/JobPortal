@@ -82,7 +82,13 @@ namespace JobPortal.Application.Services
                     statusCode = 400
                 };
             }
-
+            System.Console.WriteLine(user + "is null");
+            System.Console.WriteLine(model.email);
+            System.Console.WriteLine(model.firstName);
+            System.Console.WriteLine(model.lastName);
+            System.Console.WriteLine(model.gender);
+            System.Console.WriteLine(model.name);
+            System.Console.WriteLine(model.photoUrl);
             user = new User()
             {
                 name = model.name,
@@ -90,12 +96,18 @@ namespace JobPortal.Application.Services
                 passwordSalt = passwordSalt,
                 TokenCreated = DateTime.UtcNow,
                 TokenExpires = DateTime.UtcNow.AddMinutes(10),
-                roleId = roleService.getRole("Normal User").id
+                roleId = roleService.getRole("Normal User").id,
+                email = model.email,
+                firstName = model.firstName,
+                lastName = model.lastName,
+                gender = model.gender,
+                photoUrl = model.photoUrl,
             };
 
             user = userService.add(user);
 
             userService.update(user);
+            Console.WriteLine(user);
 
             return new ResponseViewModel()
             {

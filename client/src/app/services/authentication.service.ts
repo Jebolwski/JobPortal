@@ -118,4 +118,20 @@ export class AuthenticationService {
     localStorage.removeItem('accessToken');
     this.router.navigate(['/login']);
   }
+
+  public register(data: any) {
+    return this.http
+      .post(this.baseApiUrl + 'Authentication/register', data)
+      .pipe(
+        map((response: any) => {
+          let res: Response = response;
+          if (res.statusCode === 200) {
+            return res;
+          } else {
+            alert('HATA');
+            return null;
+          }
+        })
+      );
+  }
 }
