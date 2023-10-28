@@ -82,13 +82,13 @@ namespace JobPortal.Application.Services
                     statusCode = 400
                 };
             }
-            System.Console.WriteLine(user + "is null");
-            System.Console.WriteLine(model.email);
-            System.Console.WriteLine(model.firstName);
-            System.Console.WriteLine(model.lastName);
-            System.Console.WriteLine(model.gender);
-            System.Console.WriteLine(model.name);
-            System.Console.WriteLine(model.photoUrl);
+            Console.WriteLine(user + "is null");
+            Console.WriteLine(model.email);
+            Console.WriteLine(model.firstName);
+            Console.WriteLine(model.lastName);
+            Console.WriteLine(model.gender);
+            Console.WriteLine(model.name);
+            Console.WriteLine(model.photoUrl);
             user = new User()
             {
                 name = model.name,
@@ -139,9 +139,9 @@ namespace JobPortal.Application.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.name),
-                new Claim(ClaimTypes.Role, roleService.get(user.roleId).name),
-                new Claim(ClaimTypes.GroupSid, Convert.ToString(user.id)),
+                new Claim("messi", user.name),
+                new Claim("ronaldo", roleService.get(user.roleId).name),
+                new Claim("bale", Convert.ToString(user.id)),
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
