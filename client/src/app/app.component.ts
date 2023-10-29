@@ -14,15 +14,10 @@ export class AppComponent {
     if (localStorage.getItem('accessToken')) {
       let user1: any = jwt_decode(localStorage.getItem('accessToken') || '');
       console.log(user1);
-      let user_id =
-        user1[
-          'http://schemas.microsoft.com/ws/2008/06/identity/claims/groupsid'
-        ];
+      let user_id = user1['id'];
       auth.getUserById(user_id).subscribe();
     }
 
-    setInterval(() => {
-      auth.refreshToken({ reftoken: localStorage.getItem('refreshToken') });
-    }, 52000);
+    
   }
 }

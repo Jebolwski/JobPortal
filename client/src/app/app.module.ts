@@ -18,6 +18,7 @@ import { JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
 import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MyHttpInterceptor } from './interceptors/myhttp.interceptor';
 const JWT_Module_Options: JwtModuleOptions = {
   config: {
     tokenGetter: undefined,
@@ -29,6 +30,7 @@ const JWT_Module_Options: JwtModuleOptions = {
     LoginComponent,
     HomeComponent,
     RegisterComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,9 @@ const JWT_Module_Options: JwtModuleOptions = {
           console.error(err);
         },
       } as SocialAuthServiceConfig,
+    },
+    { 
+      provide: HTTP_INTERCEPTORS, useClass: MyHttpInterceptor, multi:true
     },
   ],
   bootstrap: [AppComponent],

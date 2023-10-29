@@ -139,9 +139,9 @@ namespace JobPortal.Application.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim("messi", user.name),
-                new Claim("ronaldo", roleService.get(user.roleId).name),
-                new Claim("bale", Convert.ToString(user.id)),
+                new Claim("name", user.name),
+                new Claim("role", roleService.get(user.roleId).name),
+                new Claim("id", Convert.ToString(user.id)),
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(

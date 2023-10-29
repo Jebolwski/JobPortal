@@ -43,10 +43,7 @@ export class AuthenticationService {
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
         let user1: any = jwt_decode(res.accessToken);
-        this.user_id =
-          user1[
-            'http://schemas.microsoft.com/ws/2008/06/identity/claims/groupsid'
-          ];
+        this.user_id = user1['id'];
         this.getUserById(this.user_id).subscribe();
         router.navigate(['/']);
       });
