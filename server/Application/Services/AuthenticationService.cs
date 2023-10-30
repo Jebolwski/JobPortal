@@ -89,14 +89,14 @@ namespace JobPortal.Application.Services
             Console.WriteLine(model.gender);
             Console.WriteLine(model.name);
             Console.WriteLine(model.photoUrl);
-            user = new User()
+            User user1 = new User()
             {
                 name = model.name,
                 passwordHash = passwordHash,
                 passwordSalt = passwordSalt,
                 TokenCreated = DateTime.UtcNow,
                 TokenExpires = DateTime.UtcNow.AddMinutes(10),
-                roleId = roleService.getRole("Normal User").id,
+                roleId = roleService.getRole("User").id,
                 email = model.email,
                 firstName = model.firstName,
                 lastName = model.lastName,
@@ -104,15 +104,15 @@ namespace JobPortal.Application.Services
                 photoUrl = model.photoUrl,
             };
 
-            user = userService.add(user);
+            User user2 = userService.add(user1);
 
-            userService.update(user);
-            Console.WriteLine(user);
+            userService.update(user2);
+            Console.WriteLine(user2);
 
             return new ResponseViewModel()
             {
                 message = "Başarıyla kayıt olundu. 😍",
-                responseModel = user,
+                responseModel = user2,
                 statusCode = 200
             };
         }
