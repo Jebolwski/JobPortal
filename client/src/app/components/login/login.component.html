@@ -1,4 +1,14 @@
 <div style="margin-bottom: 10px">google</div>
+<form (submit)="login()" [formGroup]="loginForm">
+  <div>
+    <input type="email" placeholder="email" formControlName="email" />
+  </div>
+  <div>
+    <input type="password" placeholder="şifre" formControlName="password" />
+  </div>
+  <input type="submit" />
+</form>
+
 <asl-google-signin-button
   type="icon"
   size="medium"

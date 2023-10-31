@@ -65,6 +65,23 @@ export class AuthenticationService {
         })
       );
   }
+  login(data: any) {
+    return this.http
+      .post(this.baseApiUrl + 'Authentication/login/' , data)
+      .pipe(
+        map((response: any) => {
+          let res: Response = response;
+          if (res.statusCode === 200) {
+            console.log(res);
+            localStorage.setItem('accessToken',res.responseModel.accessToken);
+            localStorage.setItem('refreshToken',res.responseModel.refreshToken);
+            this.router.navigate(['/'])
+          } else {
+            console.log('hata');
+          }
+        })
+      );
+  }
 
   AddUser(data: any) {
     return this.http

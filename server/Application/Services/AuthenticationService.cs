@@ -30,7 +30,7 @@ namespace JobPortal.Application.Services
 
         public ResponseViewModel Login(LoginModel request)
         {
-            User user = userService.getUserByUsername(request.username);
+            User user = userService.getUserByEmail(request.email);
             if (user == null)
             {
                 return new ResponseViewModel()

@@ -33,6 +33,11 @@ namespace JobPortal.Application.Services
             return userRepository.getUserByUsername(username);
         }
 
+        public User getUserByEmail(string email)
+        {
+            return userRepository.getUserByEmail(email);
+        }
+
         public User getUserByGoogleId(string GoogleId)
         {
             return userRepository.getUserByGoogleId(GoogleId);

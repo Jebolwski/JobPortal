@@ -42,5 +42,15 @@ namespace JobPortal.Data.Repositories
             return null;
         }
 
+        public User getUserByEmail(string email)
+        {
+            IQueryable<User> users = dbset.Where(p => p.email == email);
+            if (users != null && users.Any())
+            {
+                User user = users.First();
+                return user;
+            }
+            return null;
+        }
     }
 }

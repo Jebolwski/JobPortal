@@ -7,6 +7,7 @@ namespace JobPortal.Application.Interfaces
         public User update(User user);
         public User getUserByRefreshToken(string token);
         public User getUserByUsername(string username);
+        public User getUserByEmail(string email);
         public User add(User user);
         public User get(Guid id);
         public User getUserByGoogleId(string GoogleId);
