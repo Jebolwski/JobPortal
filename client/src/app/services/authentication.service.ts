@@ -65,6 +65,7 @@ export class AuthenticationService {
         })
       );
   }
+
   login(data: any) {
     return this.http
       .post(this.baseApiUrl + 'Authentication/login/' , data)
@@ -72,10 +73,9 @@ export class AuthenticationService {
         map((response: any) => {
           let res: Response = response;
           if (res.statusCode === 200) {
-            console.log(res);
             localStorage.setItem('accessToken',res.responseModel.accessToken);
-            localStorage.setItem('refreshToken',res.responseModel.refreshToken);
-            this.router.navigate(['/'])
+            localStorage.setItem('refreshToken',res.responseModel.refreshToken.token);
+            this.router.navigate(['/']);
           } else {
             console.log('hata');
           }
