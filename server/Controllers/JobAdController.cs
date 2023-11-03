@@ -9,9 +9,23 @@ namespace JobPortal.Controllers
     [ApiController]
     public class JobAdController : ControllerBase
     {
+        private readonly IJobAdService jobAdService;
 
-        public JobAdController()
+        public JobAdController(IJobAdService jobAdService)
         {
+            this.jobAdService = jobAdService;
+        }
+
+        [HttpPost("add")]
+        public ResponseViewModel Register(CreateJobAdModel model)
+        {
+            return jobAdService.addJobAd(model);
+        }
+
+        [HttpDelete("delete")]
+        public ResponseViewModel Delete(Guid id)
+        {
+            return jobAdService.deleteJobAd(id);
         }
 
     }

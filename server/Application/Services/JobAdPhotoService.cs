@@ -34,6 +34,23 @@ namespace JobPortal.Application.Services
             };
         }
     
+        public ResponseViewModel deleteJobAdPhoto(Guid id){
+            bool v = jobAdPhotoRepository.delete(id);
+            if (v){
+                return new ResponseViewModel(){
+                    message = "Successfully deleted job ad photo.",
+                    statusCode = 200,
+                    responseModel = new object()
+                };
+            }
+            return new ResponseViewModel(){
+                message = "Failed to delete job ad photo.",
+                responseModel = new object(),
+                statusCode = 400
+            };
+        }
+    
+
     }
 
 }
