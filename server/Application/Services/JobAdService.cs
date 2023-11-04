@@ -2,6 +2,8 @@ using JobPortal.Application.Interfaces;
 using JobPortal.Domain.Entities;
 using JobPortal.Application.ViewModels.ResponseM;
 using JobPortal.Domain.Interfaces;
+using JobPortal.Migrations;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace JobPortal.Application.Services
 {
@@ -10,34 +12,40 @@ namespace JobPortal.Application.Services
 
         private readonly IJobAdRepository jobAdRepository;
         private readonly IJobAdPhotoService jobAdPhotoService;
+        private readonly IUserService userService;
 
-        public JobAdService(IJobAdRepository jobAdRepository, IJobAdPhotoService jobAdPhotoService)
+        public JobAdService(IJobAdRepository jobAdRepository, IJobAdPhotoService jobAdPhotoService, IUserService userService)
         {
             this.jobAdRepository = jobAdRepository;
             this.jobAdPhotoService = jobAdPhotoService;
+            this.userService = userService;
         }
 
-        public ResponseViewModel addJobAd(CreateJobAdModel model){
+        public ResponseViewModel addJobAd(CreateJobAdModel model,string authToken){
+            
+            authToken = authToken.Replace("Bearer ", string.Empty);
+            var stream = authToken;
+            var handler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
+            User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
+
             JobAd jobAd = new JobAd(){
-                creator_id = model.creator_id,
+            creator_id = user.id,
                 description = model.description,
                 title = model.title,
             };
+            JobAd jobAd1 = jobAdRepository.add(jobAd);
 
-            foreach (JobAdPhoto photo in model.photos)
+            foreach (CreateJobAdPhotoModel photo in model.photos)
             {
                 JobAdPhoto jobAdPhoto = new JobAdPhoto(){
-                    jobAdId = photo.jobAdId,
+                    jobAdId = jobAd1.id,
                     photoUrl = photo.photoUrl
                 };
 
-                jobAdPhotoService.addJobAdPhoto(new CreateJobAdPhotoModel(){
-                    jobAdId = jobAdPhoto.jobAdId,
-                    photoUrl = jobAdPhoto.photoUrl
-                });
+                jobAdPhotoService.addJobAdPhoto(jobAdPhoto);
             }
             
-            JobAd jobAd1 = jobAdRepository.add(jobAd);
 
             return new ResponseViewModel(){
                 statusCode = 200,
@@ -81,7 +89,11 @@ namespace JobPortal.Application.Services
             // yenilerini ekle
             foreach (CreateJobAdPhotoModel createJobAdPhotoModel in model.photos)
             {
-                jobAdPhotoService.addJobAdPhoto(createJobAdPhotoModel);
+                
+                jobAdPhotoService.addJobAdPhoto(new JobAdPhoto(){
+                    jobAdId = id,
+                    photoUrl = createJobAdPhotoModel.photoUrl
+                });
             }
             JobAd jobAd1 = jobAdRepository.update(jobAd);
             if (jobAd1!=null){

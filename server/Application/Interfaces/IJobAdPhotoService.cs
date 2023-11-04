@@ -7,7 +7,7 @@ namespace JobPortal.Application.Interfaces
 {
     public interface IJobAdPhotoService
     {
-        public ResponseViewModel addJobAdPhoto(CreateJobAdPhotoModel model);
+        public ResponseViewModel addJobAdPhoto(JobAdPhoto photo);
         public ResponseViewModel deleteJobAdPhoto(Guid id);
     }
 }

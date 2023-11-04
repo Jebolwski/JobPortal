@@ -139,8 +139,8 @@ namespace JobPortal.Application.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim("name", user.name),
-                new Claim("role", roleService.get(user.roleId).name),
+                new Claim(ClaimTypes.Name, user.name),
+                new Claim(ClaimTypes.Role, roleService.get(user.roleId).name),
                 new Claim("id", Convert.ToString(user.id)),
             };
 

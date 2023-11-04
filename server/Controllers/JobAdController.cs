@@ -1,6 +1,7 @@
 using JobPortal.Application.Interfaces;
 using JobPortal.Application.ViewModels.AuthM;
 using JobPortal.Application.ViewModels.ResponseM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobPortal.Controllers
@@ -16,10 +17,11 @@ namespace JobPortal.Controllers
             this.jobAdService = jobAdService;
         }
 
-        [HttpPost("add")]
+        [HttpPost("add"), Authorize(Roles = "Employer, Admin")]
         public ResponseViewModel Register(CreateJobAdModel model)
         {
-            return jobAdService.addJobAd(model);
+            string authToken = HttpContext.Request.Headers["Authorization"];
+            return jobAdService.addJobAd(model,authToken);
         }
 
         [HttpDelete("delete")]

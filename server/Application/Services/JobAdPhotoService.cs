@@ -21,11 +21,8 @@ namespace JobPortal.Application.Services
         }
 
 
-        public ResponseViewModel addJobAdPhoto(CreateJobAdPhotoModel model){
-            JobAdPhoto jobAdPhoto = jobAdPhotoRepository.add(new JobAdPhoto(){
-                jobAdId = model.jobAdId,
-                photoUrl = model.photoUrl
-            });
+        public ResponseViewModel addJobAdPhoto(JobAdPhoto photo){
+            JobAdPhoto jobAdPhoto = jobAdPhotoRepository.add(photo);
 
             return new ResponseViewModel(){
                 statusCode = 200,

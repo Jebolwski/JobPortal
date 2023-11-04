@@ -165,3 +165,7 @@ C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\obj\De
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\obj\Debug\net6.0\JobPortal.pdb
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\obj\Debug\net6.0\JobPortal.genruntimeconfig.cache
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\obj\Debug\net6.0\ref\JobPortal.dll
+C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\bin\Debug\net6.0\Scrutor.dll
+C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
