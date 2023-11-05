@@ -48,6 +48,7 @@ client/node_modules/
 server/bin/
 server/.vs/
 server/JobPortal.csproj
+server/appsettings.json
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/

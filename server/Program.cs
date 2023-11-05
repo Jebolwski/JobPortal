@@ -46,16 +46,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
                 .GetBytes(builder.Configuration.GetSection("JwtSettings:Key").Value)),
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = false
         };
     });
 
 builder.Services.AddAuthentication().AddGoogle(googleOptions =>
 {
-    googleOptions.ClientId = "715151845153-q5u9l13j6tu5ghqimerorj17hegcgvts.apps.googleusercontent.com";
-    googleOptions.ClientSecret = "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";
+    googleOptions.ClientId = builder.Configuration.GetSection("GoogleId").Value;
+    googleOptions.ClientSecret = builder.Configuration.GetSection("GoogleSecret").Value;
 });
 
 builder.Services.AddCors(options => options.AddPolicy(name: "NgOrigins",

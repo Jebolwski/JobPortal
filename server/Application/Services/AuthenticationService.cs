@@ -12,6 +12,7 @@ using JobPortal.Application.ViewModels.ResponseM;
 using System.ComponentModel;
 using JobPortal.Migrations;
 using JobPortal.Data.Repositories;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace JobPortal.Application.Services
 {
@@ -139,7 +140,7 @@ namespace JobPortal.Application.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.name),
+                new Claim("name", user.name),
                 new Claim(ClaimTypes.Role, roleService.get(user.roleId).name),
                 new Claim("id", Convert.ToString(user.id)),
             };
