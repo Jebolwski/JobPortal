@@ -54,7 +54,6 @@ namespace JobPortal.Application.Services
             };
         }
 
-
         public ResponseViewModel deleteJobAd(Guid id){
             bool v = jobAdRepository.delete(id);
             if (v){
@@ -70,7 +69,6 @@ namespace JobPortal.Application.Services
                 statusCode = 400
             };
         }
-
 
         public ResponseViewModel updateJobAd(UpdateJobAdModel model,Guid id){
             JobAd jobAd = new JobAd(){

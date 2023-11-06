@@ -21,10 +21,13 @@ builder.Services.AddScoped<BaseContext>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJobAdRepository, JobAdRepository>();
+builder.Services.AddScoped<IJobAdPhotoRepository, JobAdPhotoRepository>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJobAdService, JobAdService>();
+builder.Services.AddScoped<IJobAdPhotoService, JobAdPhotoService>();
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
