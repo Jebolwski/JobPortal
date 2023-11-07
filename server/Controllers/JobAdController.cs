@@ -18,16 +18,24 @@ namespace JobPortal.Controllers
         }
 
         [HttpPost("add"), Authorize(Roles = "Employer, Admin")]
-        public ResponseViewModel Register(CreateJobAdModel model)
+        public ResponseViewModel add(CreateJobAdModel model)
         {
             string authToken = HttpContext.Request.Headers["Authorization"];
             return jobAdService.addJobAd(model,authToken);
         }
 
-        [HttpDelete("delete")]
-        public ResponseViewModel Delete(Guid id)
+        [HttpPost("update"), Authorize(Roles = "Employer, Admin")]
+        public ResponseViewModel update(UpdateJobAdModel model)
         {
-            return jobAdService.deleteJobAd(id);
+            string authToken = HttpContext.Request.Headers["Authorization"];
+            return jobAdService.updateJobAd(model,authToken);
+        }
+
+        [HttpDelete("delete")]
+        public ResponseViewModel delete(Guid id)
+        {
+            string authToken = HttpContext.Request.Headers["Authorization"];
+            return jobAdService.deleteJobAd(id,authToken);
         }
 
     }

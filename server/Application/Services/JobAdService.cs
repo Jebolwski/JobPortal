@@ -54,31 +54,55 @@ namespace JobPortal.Application.Services
             };
         }
 
-        public ResponseViewModel deleteJobAd(Guid id){
-            bool v = jobAdRepository.delete(id);
-            if (v){
+        public ResponseViewModel deleteJobAd(Guid id,string authToken){
+            authToken = authToken.Replace("Bearer ", string.Empty);
+            var stream = authToken;
+            var handler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
+            User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
+                JobAd jobAd = jobAdRepository.get(id);
+            if (user.id == jobAd.creator_id){
+                bool v = jobAdRepository.delete(id);
+                if (v){
+                    return new ResponseViewModel(){
+                        message = "Successfully deleted job ad.",
+                        statusCode = 200,
+                        responseModel = new object()
+                    };
+                }
                 return new ResponseViewModel(){
-                    message = "Successfully deleted job ad.",
-                    statusCode = 200,
-                    responseModel = new object()
+                    message = "Failed to delete job ad.",
+                    responseModel = new object(),
+                    statusCode = 400
                 };
             }
             return new ResponseViewModel(){
-                message = "Failed to delete job ad.",
-                responseModel = new object(),
-                statusCode = 400
+                    message = "You dont own this job ad.",
+                    responseModel = new object(),
+                    statusCode = 400
             };
         }
 
-        public ResponseViewModel updateJobAd(UpdateJobAdModel model,Guid id){
+        public ResponseViewModel updateJobAd(UpdateJobAdModel model,string authToken){
+            authToken = authToken.Replace("Bearer ", string.Empty);
+            var stream = authToken;
+            var handler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
+            User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
+            JobAd jobAd2 = jobAdRepository.get(model.id);
+            if (user.id!=jobAd2.creator_id){
+                return new ResponseViewModel(){
+                    message = "You dont own this job ad.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
             JobAd jobAd = new JobAd(){
-                creator_id = model.creator_id,
+                creator_id = jobAd2.creator_id,
                 description = model.description,
-                id = id,
+                id = model.id,
                 title = model.title,
             };
-            JobAd jobAd2 = jobAdRepository.get(id);
-
             // jobadphotoları sil
             foreach (JobAdPhoto adPhoto in jobAd2.photos)
             {
@@ -89,7 +113,7 @@ namespace JobPortal.Application.Services
             {
                 
                 jobAdPhotoService.addJobAdPhoto(new JobAdPhoto(){
-                    jobAdId = id,
+                    jobAdId = model.id,
                     photoUrl = createJobAdPhotoModel.photoUrl
                 });
             }
