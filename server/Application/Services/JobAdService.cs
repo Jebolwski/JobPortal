@@ -45,12 +45,14 @@ namespace JobPortal.Application.Services
 
                 jobAdPhotoService.addJobAdPhoto(jobAdPhoto);
             }
+
+            JobAd jobAd2 = jobAdRepository.getJobAdWithPhotos(jobAd1.id);
             
 
             return new ResponseViewModel(){
                 statusCode = 200,
                 message = "Successfully added job ad.",
-                responseModel = jobAd1
+                responseModel = jobAd2
             };
         }
 
@@ -89,7 +91,7 @@ namespace JobPortal.Application.Services
             var handler = new JwtSecurityTokenHandler();
             JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
             User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
-            JobAd jobAd2 = jobAdRepository.get(model.id);
+            JobAd jobAd2 = jobAdRepository.getJobAdWithPhotos(model.id);
             if (user.id!=jobAd2.creator_id){
                 return new ResponseViewModel(){
                     message = "You dont own this job ad.",
@@ -97,12 +99,7 @@ namespace JobPortal.Application.Services
                     statusCode = 400
                 };
             }
-            JobAd jobAd = new JobAd(){
-                creator_id = jobAd2.creator_id,
-                description = model.description,
-                id = model.id,
-                title = model.title,
-            };
+            
             // jobadphotoları sil
             foreach (JobAdPhoto adPhoto in jobAd2.photos)
             {
@@ -117,7 +114,10 @@ namespace JobPortal.Application.Services
                     photoUrl = createJobAdPhotoModel.photoUrl
                 });
             }
-            JobAd jobAd1 = jobAdRepository.update(jobAd);
+            jobAd2.creator_id = user.id;
+            jobAd2.title = model.title;
+            jobAd2.description = model.description;
+            JobAd jobAd1 = jobAdRepository.update(jobAd2);
             if (jobAd1!=null){
                 return new ResponseViewModel(){
                     message = "Successfully updated job ad.",

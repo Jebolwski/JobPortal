@@ -5,5 +5,6 @@ namespace JobPortal.Domain.Interfaces
 {
     public interface IJobAdRepository : IRepository<JobAd>
     {
+        public JobAd getJobAdWithPhotos(Guid id);
     }
 }

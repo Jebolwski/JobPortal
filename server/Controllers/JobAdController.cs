@@ -31,7 +31,7 @@ namespace JobPortal.Controllers
             return jobAdService.updateJobAd(model,authToken);
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("delete"), Authorize(Roles = "Employer, Admin")]
         public ResponseViewModel delete(Guid id)
         {
             string authToken = HttpContext.Request.Headers["Authorization"];
