@@ -131,6 +131,23 @@ namespace JobPortal.Application.Services
                 statusCode = 400
             };
         }
+
+        public ResponseViewModel getJobAd(Guid id){
+            JobAd jobAd = jobAdRepository.getJobAdWithPhotos(id);
+            
+            if (jobAd!=null){
+                return new ResponseViewModel(){
+                    message = "Successfully got job ad.",
+                    statusCode = 200,
+                    responseModel = jobAd
+                };
+            }
+            return new ResponseViewModel(){
+                message = "Failed to got job ad.",
+                responseModel = new object(),
+                statusCode = 400
+            };
+        }
     
     }
 

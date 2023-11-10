@@ -6,7 +6,7 @@ namespace JobPortal.Application.Interfaces
     {
         public ResponseViewModel addJobAd(CreateJobAdModel model,string authToken);
         public ResponseViewModel deleteJobAd(Guid id,string authToken);
-
+        public ResponseViewModel getJobAd(Guid id);
         public ResponseViewModel updateJobAd(UpdateJobAdModel model,string authToken);
     }
 }

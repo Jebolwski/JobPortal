@@ -17,6 +17,12 @@ namespace JobPortal.Controllers
             this.jobAdService = jobAdService;
         }
 
+        [HttpGet("{id}")]
+        public ResponseViewModel add(Guid id)
+        {
+            return jobAdService.getJobAd(id);
+        }
+
         [HttpPost("add"), Authorize(Roles = "Employer, Admin")]
         public ResponseViewModel add(CreateJobAdModel model)
         {
@@ -24,7 +30,7 @@ namespace JobPortal.Controllers
             return jobAdService.addJobAd(model,authToken);
         }
 
-        [HttpPost("update"), Authorize(Roles = "Employer, Admin")]
+        [HttpPut("update"), Authorize(Roles = "Employer, Admin")]
         public ResponseViewModel update(UpdateJobAdModel model)
         {
             string authToken = HttpContext.Request.Headers["Authorization"];
