@@ -17,6 +17,7 @@ namespace JobPortal.Data.Context
         public DbSet<JobAd> jobAds { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Employer> employers { get; set; }
 
         public BaseContext()
         {
@@ -30,6 +31,7 @@ namespace JobPortal.Data.Context
             modelBuilder.ApplyConfiguration(new JobAdMap());
             modelBuilder.ApplyConfiguration(new JobAdPhotoMap());
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new EmployerMap());
             modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.HasDefaultSchema("JobPortal");
         }

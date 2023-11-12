@@ -1,6 +1,7 @@
 using JobPortal.Application.Interfaces;
 using JobPortal.Application.ViewModels.AuthM;
 using JobPortal.Application.ViewModels.ResponseM;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobPortal.Controllers
@@ -62,6 +63,20 @@ namespace JobPortal.Controllers
         public bool delete(Guid userId)
         {
             return authenticationService.deleteUser(userId);
+        }
+
+        [HttpPost("add-employer"),Authorize(Roles = "User, Admin")]
+        public ResponseViewModel addEmployer(CreateEmployerModel model)
+        {
+            string authToken = HttpContext.Request.Headers["Authorization"];
+            return authenticationService.addEmployer(model,authToken);
+        }
+
+        [HttpDelete("delete-employer"),Authorize(Roles = "User, Admin")]
+        public ResponseViewModel deleteEmployer(Guid id)
+        {
+            string authToken = HttpContext.Request.Headers["Authorization"];
+            return authenticationService.deleteEmployer(id,authToken);
         }
     }
 }

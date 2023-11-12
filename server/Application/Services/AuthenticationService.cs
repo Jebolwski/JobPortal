@@ -21,12 +21,14 @@ namespace JobPortal.Application.Services
         private readonly IConfiguration configuration;
         private readonly IUserService userService;
         private readonly IRoleService roleService;
+        private readonly IEmployerService employerService;
 
-        public AuthenticationService(IConfiguration configuration, IUserService userService, IRoleService roleService)
+        public AuthenticationService(IConfiguration configuration, IUserService userService, IRoleService roleService, IEmployerService employerService)
         {
             this.configuration = configuration;
             this.userService = userService;
             this.roleService = roleService;
+            this.employerService = employerService;
         }
 
         public ResponseViewModel Login(LoginModel request)
@@ -368,6 +370,35 @@ namespace JobPortal.Application.Services
             return userService.delete(id);
         }
 
+        public ResponseViewModel addEmployer(CreateEmployerModel model,string authToken){
+            authToken = authToken.Replace("Bearer ", string.Empty);
+            var stream = authToken;
+            var handler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
+            User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
+            if (user == null){
+                return new ResponseViewModel(){
+                    message = "Couldnt find user.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+            Employer employer = new Employer(){
+                company_date_created = model.company_date_created,
+                company_logo_photo_url = model.company_logo_photo_url,
+                company_name = model.company_name,
+                companys_job = model.companys_job,
+                user_id = user.id,
+            };
+            ResponseViewModel responseViewModel = employerService.addEmployer(employer);
+            return responseViewModel;
+        }
+    
+        public ResponseViewModel deleteEmployer(Guid id,string authToken){
+            ResponseViewModel responseViewModel = employerService.deleteEmployer(id,authToken);
+            return responseViewModel;
+        }
+    
     }
 
 }
