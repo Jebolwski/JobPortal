@@ -9,5 +9,6 @@ namespace JobPortal.Application.Interfaces
     {
         public ResponseViewModel addEmployer(Employer photo);
         public ResponseViewModel deleteEmployer(Guid id,string authToken);
+        public ResponseViewModel getEmployer(Guid id);
     }
 }

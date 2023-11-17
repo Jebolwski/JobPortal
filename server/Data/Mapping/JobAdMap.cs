@@ -14,6 +14,7 @@ namespace JobPortal.Data.Mapping
             builder.Property(p => p.title).HasColumnName("title");
             builder.Property(p => p.description).HasColumnName("description");
             builder.Property(p => p.creator_id).HasColumnName("creator_id");
+            builder.Property(p => p.employer_id).HasColumnName("employer_id");
             builder.HasMany(p => p.photos).WithOne().HasForeignKey(p => p.jobAdId)
                 .OnDelete(DeleteBehavior.Cascade);
         }

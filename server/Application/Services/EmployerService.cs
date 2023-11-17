@@ -73,6 +73,25 @@ namespace JobPortal.Application.Services
                 statusCode = 400
             };
         }
+    
+        public ResponseViewModel getEmployer(Guid id)
+        {
+            Employer employer = EmployerRepository.get(id);
+            if (employer == null){
+                return new ResponseViewModel(){
+                    message = "Could'nt find employer successfully.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+            return new ResponseViewModel(){
+                message = "Successfully found employer.",
+                responseModel = employer,
+                statusCode = 200
+            };
+
+        }
+
     }
 
 }

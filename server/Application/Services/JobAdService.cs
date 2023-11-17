@@ -13,12 +13,14 @@ namespace JobPortal.Application.Services
         private readonly IJobAdRepository jobAdRepository;
         private readonly IJobAdPhotoService jobAdPhotoService;
         private readonly IUserService userService;
+        private readonly IEmployerService employerService;
 
-        public JobAdService(IJobAdRepository jobAdRepository, IJobAdPhotoService jobAdPhotoService, IUserService userService)
+        public JobAdService(IJobAdRepository jobAdRepository, IJobAdPhotoService jobAdPhotoService, IUserService userService, IEmployerService employerService = null)
         {
             this.jobAdRepository = jobAdRepository;
             this.jobAdPhotoService = jobAdPhotoService;
             this.userService = userService;
+            this.employerService = employerService;
         }
 
         public ResponseViewModel addJobAd(CreateJobAdModel model,string authToken){
@@ -28,12 +30,21 @@ namespace JobPortal.Application.Services
             var handler = new JwtSecurityTokenHandler();
             JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
             User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
-
+            ResponseViewModel responseViewModel = employerService.getEmployer(user.id);
+            if (responseViewModel.statusCode==400){
+                return new ResponseViewModel(){
+                    message = "You are not an employer.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
             JobAd jobAd = new JobAd(){
-            creator_id = user.id,
+                employer_id = ((Employer)responseViewModel.responseModel).id,
+                creator_id = user.id,
                 description = model.description,
                 title = model.title,
             };
+            
             JobAd jobAd1 = jobAdRepository.add(jobAd);
 
             foreach (CreateJobAdPhotoModel photo in model.photos)
@@ -62,7 +73,15 @@ namespace JobPortal.Application.Services
             var handler = new JwtSecurityTokenHandler();
             JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
             User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
-                JobAd jobAd = jobAdRepository.get(id);
+            JobAd jobAd = jobAdRepository.get(id);
+            ResponseViewModel responseViewModel = employerService.getEmployer(user.id);
+            if (responseViewModel.statusCode==400){
+                return new ResponseViewModel(){
+                    message = "You are not an employer.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
             if (user.id == jobAd.creator_id){
                 bool v = jobAdRepository.delete(id);
                 if (v){
@@ -92,6 +111,14 @@ namespace JobPortal.Application.Services
             JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
             User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
             JobAd jobAd2 = jobAdRepository.getJobAdWithPhotos(model.id);
+            ResponseViewModel responseViewModel = employerService.getEmployer(user.id);
+            if (responseViewModel.statusCode==400){
+                return new ResponseViewModel(){
+                    message = "You are not an employer.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
             if (user.id!=jobAd2.creator_id){
                 return new ResponseViewModel(){
                     message = "You dont own this job ad.",
