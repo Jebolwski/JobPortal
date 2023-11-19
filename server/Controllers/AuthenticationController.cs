@@ -78,5 +78,13 @@ namespace JobPortal.Controllers
             string authToken = HttpContext.Request.Headers["Authorization"];
             return authenticationService.deleteEmployer(id,authToken);
         }
+
+        [HttpPost("change-password"),Authorize()]
+        public ResponseViewModel resetPassword(NewPasswordModel model)
+        {
+            string authToken = HttpContext.Request.Headers["Authorization"];
+            return authenticationService.changePassword(model,authToken);
+        }
     }
+
 }

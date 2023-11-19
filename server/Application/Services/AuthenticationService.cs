@@ -85,13 +85,6 @@ namespace JobPortal.Application.Services
                     statusCode = 400
                 };
             }
-            Console.WriteLine(user + "is null");
-            Console.WriteLine(model.email);
-            Console.WriteLine(model.firstName);
-            Console.WriteLine(model.lastName);
-            Console.WriteLine(model.gender);
-            Console.WriteLine(model.name);
-            Console.WriteLine(model.photoUrl);
             User user1 = new User()
             {
                 name = model.name,
@@ -397,6 +390,44 @@ namespace JobPortal.Application.Services
         public ResponseViewModel deleteEmployer(Guid id,string authToken){
             ResponseViewModel responseViewModel = employerService.deleteEmployer(id,authToken);
             return responseViewModel;
+        }
+
+        public ResponseViewModel changePassword(NewPasswordModel model,string authToken){
+            authToken = authToken.Replace("Bearer ", string.Empty);
+            var stream = authToken;
+            var handler = new JwtSecurityTokenHandler();
+            JwtSecurityToken jsonToken = handler.ReadJwtToken(stream);
+            User user = userService.getUserByUsername(jsonToken.Claims.First().Value);
+            if (user.googleUserId!=null){
+                return new ResponseViewModel(){
+                    message = "You logged in with google, cant change your password.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+            if (user == null){
+                return new ResponseViewModel(){
+                    message = "Couldnt find user.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+            if (model.newPassword1!=model.newPassword2){
+                return new ResponseViewModel(){
+                    message = "Passwords dont match.",
+                    statusCode = 400,
+                    responseModel = new object()
+                };
+            }
+            CreatePasswordHash(model.newPassword1, out byte[] passwordHash, out byte[] passwordSalt);
+            user.passwordHash = passwordHash;
+            user.passwordSalt = passwordSalt;
+            User user1 = userService.update(user);
+            return new ResponseViewModel(){
+                message = "Password changed.",
+                responseModel = user1,
+                statusCode = 200
+            };
         }
     
     }

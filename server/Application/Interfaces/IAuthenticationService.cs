@@ -16,5 +16,6 @@ namespace JobPortal.Application.Interfaces
         public bool deleteUser(Guid id);
         public ResponseViewModel addEmployer(CreateEmployerModel model,string authToken);
         public ResponseViewModel deleteEmployer(Guid id,string authToken);
+        public ResponseViewModel changePassword(NewPasswordModel model,string authToken);
     }
 }
