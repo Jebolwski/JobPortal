@@ -13,6 +13,8 @@ using System.ComponentModel;
 using JobPortal.Migrations;
 using JobPortal.Data.Repositories;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
+using System.Net;
 
 namespace JobPortal.Application.Services
 {
@@ -22,6 +24,7 @@ namespace JobPortal.Application.Services
         private readonly IUserService userService;
         private readonly IRoleService roleService;
         private readonly IEmployerService employerService;
+        
 
         public AuthenticationService(IConfiguration configuration, IUserService userService, IRoleService roleService, IEmployerService employerService)
         {
@@ -426,6 +429,39 @@ namespace JobPortal.Application.Services
             return new ResponseViewModel(){
                 message = "Password changed.",
                 responseModel = user1,
+                statusCode = 200
+            };
+        }
+
+        public ResponseViewModel resetPasswordSendMail(string mail){
+            User user = userService.getUserByEmail(mail);
+            if (user == null){
+                return new ResponseViewModel(){
+                    message = "Couldnt find user.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+            var builder = WebApplication.CreateBuilder();
+            var smtpClient = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential("besevler.mah.muh@gmail.com", builder.Configuration.GetSection("MailPassword").Value),
+                EnableSsl = true,
+            };
+
+
+            var mailSending = new MailMessage();
+            mailSending.Subject = "Password reset";
+            mailSending.From = new MailAddress("besevler.mah.muh@gmail.com");
+            mailSending.To.Add(user.email);
+            mailSending.Body = "sa as";
+            mailSending.IsBodyHtml = true;
+            smtpClient.Send(mailSending);
+
+            return new ResponseViewModel(){
+                message = "Successfully sent mail.",
+                responseModel = new object(),
                 statusCode = 200
             };
         }

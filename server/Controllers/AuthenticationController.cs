@@ -80,10 +80,16 @@ namespace JobPortal.Controllers
         }
 
         [HttpPost("change-password"),Authorize()]
-        public ResponseViewModel resetPassword(NewPasswordModel model)
+        public ResponseViewModel changePassword(NewPasswordModel model)
         {
             string authToken = HttpContext.Request.Headers["Authorization"];
             return authenticationService.changePassword(model,authToken);
+        }
+
+        [HttpPost("reset-password-mail")]
+        public ResponseViewModel resetPasswordMail(string mail)
+        {
+            return authenticationService.resetPasswordSendMail(mail);
         }
     }
 
