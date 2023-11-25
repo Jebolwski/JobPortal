@@ -25,6 +25,20 @@ namespace JobPortal.Application.Services
         private readonly IRoleService roleService;
         private readonly IEmployerService employerService;
         
+        private bool IsValid(string token)
+        {
+            JwtSecurityToken jwtSecurityToken;
+            try
+            {
+                jwtSecurityToken = new JwtSecurityToken(token);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return jwtSecurityToken.ValidTo > DateTime.UtcNow;
+        }
 
         public AuthenticationService(IConfiguration configuration, IUserService userService, IRoleService roleService, IEmployerService employerService)
         {
@@ -450,17 +464,116 @@ namespace JobPortal.Application.Services
                 EnableSsl = true,
             };
 
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim("id", Convert.ToString(user.id)),
+            };
+
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
+                configuration.GetSection("JwtSettings:Key").Value));
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(10),
+                signingCredentials: creds
+            );
 
             var mailSending = new MailMessage();
             mailSending.Subject = "Password reset";
             mailSending.From = new MailAddress("besevler.mah.muh@gmail.com");
             mailSending.To.Add(user.email);
-            mailSending.Body = "sa as";
+            
+            mailSending.Body = "https://www.instagram.com/";
             mailSending.IsBodyHtml = true;
             smtpClient.Send(mailSending);
 
             return new ResponseViewModel(){
                 message = "Successfully sent mail.",
+                responseModel = new object(),
+                statusCode = 200
+            };
+        }
+    
+
+        public ResponseViewModel resetPasswordCheckJwt(string jwtToken){
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(jwtToken);
+            var tokenS = jsonToken as JwtSecurityToken;
+            if (IsValid(jwtToken)){
+                return new ResponseViewModel(){
+                    message = "Token expired.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+            Guid id = new Guid(tokenS.Claims.First(claim => claim.Type == "id").Value);
+            User user = userService.get(id);
+
+            if (user != null){
+                return new ResponseViewModel(){
+                    message = "User not found.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+
+            return new ResponseViewModel(){
+                message = "Successfully got user.",
+                responseModel = new object(),
+                statusCode = 200
+            };
+        }
+    
+        public ResponseViewModel resetPassword(ResetPasswordModel model){
+            var handler = new JwtSecurityTokenHandler();
+            var jsonToken = handler.ReadToken(model.token);
+            var tokenS = jsonToken as JwtSecurityToken;
+            if (IsValid(model.token)){
+                return new ResponseViewModel(){
+                    message = "Token expired.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+            
+            Guid id = new Guid(tokenS.Claims.First(claim => claim.Type == "id").Value);
+            User user = userService.get(id);
+
+            CreatePasswordHash(model.newPassword1,out byte[] passwordHash, out byte[] passwordSalt);
+
+            if (!VerifyPasswordHash(model.oldPassword, passwordHash, passwordSalt)){
+                return new ResponseViewModel(){
+                    message = "Old password isnt correct",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+
+            if (user != null){
+                return new ResponseViewModel(){
+                    message = "User not found.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+            
+            if (model.newPassword1!=model.newPassword2){
+                return new ResponseViewModel(){
+                    message = "Passwords do not match.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+
+            user.passwordHash = passwordHash;
+            user.passwordSalt = passwordSalt;
+
+            userService.update(user);
+
+            return new ResponseViewModel(){
+                message = "Successfully changed users password.",
                 responseModel = new object(),
                 statusCode = 200
             };

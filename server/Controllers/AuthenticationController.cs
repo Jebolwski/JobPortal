@@ -91,6 +91,18 @@ namespace JobPortal.Controllers
         {
             return authenticationService.resetPasswordSendMail(mail);
         }
+
+        [HttpGet("reset-password/{jwtToken}")]
+        public ResponseViewModel resetPasswordCheckJwt(string jwtToken)
+        {
+            return authenticationService.resetPasswordCheckJwt(jwtToken);
+        }
+
+        [HttpPost("reset-password")]
+        public ResponseViewModel resetPassword(ResetPasswordModel model)
+        {
+            return authenticationService.resetPassword(model);
+        }
     }
 
 }

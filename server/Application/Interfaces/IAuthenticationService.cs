@@ -18,5 +18,7 @@ namespace JobPortal.Application.Interfaces
         public ResponseViewModel deleteEmployer(Guid id,string authToken);
         public ResponseViewModel changePassword(NewPasswordModel model,string authToken);
         public ResponseViewModel resetPasswordSendMail(string mail);
+        public ResponseViewModel resetPasswordCheckJwt(string jwtToken);
+        public ResponseViewModel resetPassword(ResetPasswordModel model);
     }
 }

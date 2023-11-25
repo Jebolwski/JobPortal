@@ -169,3 +169,4 @@ C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\bin\De
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\bin\Debug\net6.0\Scrutor.dll
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\mertg\OneDrive\Masaüstü\Dosya\Programming\web\JobPortal\server\obj\Debug\net6.0\JobPortal.sourcelink.json
