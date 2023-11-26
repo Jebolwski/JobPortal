@@ -36,7 +36,6 @@ namespace JobPortal.Application.Services
             {
                 return false;
             }
-
             return jwtSecurityToken.ValidTo > DateTime.UtcNow;
         }
 
@@ -480,12 +479,15 @@ namespace JobPortal.Application.Services
                 signingCredentials: creds
             );
 
+            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
+
             var mailSending = new MailMessage();
             mailSending.Subject = "Password reset";
             mailSending.From = new MailAddress("besevler.mah.muh@gmail.com");
             mailSending.To.Add(user.email);
-            
-            mailSending.Body = "https://www.instagram.com/";
+            System.Console.WriteLine(jwt);
+            mailSending.Body = Convert.ToString(jwt);
             mailSending.IsBodyHtml = true;
             smtpClient.Send(mailSending);
 
@@ -496,12 +498,11 @@ namespace JobPortal.Application.Services
             };
         }
     
-
         public ResponseViewModel resetPasswordCheckJwt(string jwtToken){
             var handler = new JwtSecurityTokenHandler();
             var jsonToken = handler.ReadToken(jwtToken);
             var tokenS = jsonToken as JwtSecurityToken;
-            if (IsValid(jwtToken)){
+            if (!IsValid(jwtToken)){
                 return new ResponseViewModel(){
                     message = "Token expired.",
                     responseModel = new object(),
@@ -511,7 +512,7 @@ namespace JobPortal.Application.Services
             Guid id = new Guid(tokenS.Claims.First(claim => claim.Type == "id").Value);
             User user = userService.get(id);
 
-            if (user != null){
+            if (user == null){
                 return new ResponseViewModel(){
                     message = "User not found.",
                     responseModel = new object(),
@@ -521,25 +522,16 @@ namespace JobPortal.Application.Services
 
             return new ResponseViewModel(){
                 message = "Successfully got user.",
-                responseModel = new object(),
+                responseModel = user,
                 statusCode = 200
             };
         }
     
         public ResponseViewModel resetPassword(ResetPasswordModel model){
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(model.token);
-            var tokenS = jsonToken as JwtSecurityToken;
-            if (IsValid(model.token)){
-                return new ResponseViewModel(){
-                    message = "Token expired.",
-                    responseModel = new object(),
-                    statusCode = 400
-                };
-            }
             
-            Guid id = new Guid(tokenS.Claims.First(claim => claim.Type == "id").Value);
-            User user = userService.get(id);
+            ResponseViewModel responseViewModel = resetPasswordCheckJwt(model.token);
+            
+            User user = (User)responseViewModel.responseModel;
 
             CreatePasswordHash(model.newPassword1,out byte[] passwordHash, out byte[] passwordSalt);
 
@@ -551,13 +543,6 @@ namespace JobPortal.Application.Services
                 };
             }
 
-            if (user != null){
-                return new ResponseViewModel(){
-                    message = "User not found.",
-                    responseModel = new object(),
-                    statusCode = 400
-                };
-            }
             
             if (model.newPassword1!=model.newPassword2){
                 return new ResponseViewModel(){
