@@ -446,8 +446,8 @@ namespace JobPortal.Application.Services
             };
         }
 
-        public ResponseViewModel resetPasswordSendMail(string mail){
-            User user = userService.getUserByEmail(mail);
+        public ResponseViewModel resetPasswordSendMail(ResetPasswordMailModel model){
+            User user = userService.getUserByEmail(model.email);
             if (user == null){
                 return new ResponseViewModel(){
                     message = "Couldnt find user.",
@@ -487,7 +487,7 @@ namespace JobPortal.Application.Services
             mailSending.From = new MailAddress("besevler.mah.muh@gmail.com");
             mailSending.To.Add(user.email);
             System.Console.WriteLine(jwt);
-            mailSending.Body = Convert.ToString(jwt);
+            mailSending.Body = "http://localhost:4200/reset-password/"+Convert.ToString(jwt);
             mailSending.IsBodyHtml = true;
             smtpClient.Send(mailSending);
 
@@ -533,17 +533,6 @@ namespace JobPortal.Application.Services
             
             User user = (User)responseViewModel.responseModel;
 
-            CreatePasswordHash(model.newPassword1,out byte[] passwordHash, out byte[] passwordSalt);
-
-            if (!VerifyPasswordHash(model.oldPassword, passwordHash, passwordSalt)){
-                return new ResponseViewModel(){
-                    message = "Old password isnt correct",
-                    responseModel = new object(),
-                    statusCode = 400
-                };
-            }
-
-            
             if (model.newPassword1!=model.newPassword2){
                 return new ResponseViewModel(){
                     message = "Passwords do not match.",
@@ -551,6 +540,9 @@ namespace JobPortal.Application.Services
                     statusCode = 400
                 };
             }
+
+            CreatePasswordHash(model.newPassword1,out byte[] passwordHash, out byte[] passwordSalt);
+
 
             user.passwordHash = passwordHash;
             user.passwordSalt = passwordSalt;

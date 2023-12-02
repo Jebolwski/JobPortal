@@ -87,9 +87,9 @@ namespace JobPortal.Controllers
         }
 
         [HttpPost("reset-password-mail")]
-        public ResponseViewModel resetPasswordMail(string mail)
+        public ResponseViewModel resetPasswordMail(ResetPasswordMailModel model)
         {
-            return authenticationService.resetPasswordSendMail(mail);
+            return authenticationService.resetPasswordSendMail(model);
         }
 
         [HttpGet("reset-password/{jwtToken}")]
