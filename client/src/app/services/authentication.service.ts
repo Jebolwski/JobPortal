@@ -23,7 +23,7 @@ export class AuthenticationService {
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
     private externalAuthService: SocialAuthService,
-    private router: Router
+    private router: Router,
   ) {
     this.getUserById(this.user_id).subscribe();
 
@@ -147,5 +147,33 @@ export class AuthenticationService {
           }
         })
       );
+  }
+
+  public resetPassword(data: {token:string,newPassword1:string,newPassword2:string}) {
+    return this.http.post(this.baseApiUrl+'Authentication/reset-password',data).pipe(
+      map((response: any) => {
+        let res: Response = response;
+        if (res.statusCode === 200) {
+          return res;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
+  public resetPasswordMail(data: {email:string}) {
+    console.log(data);
+    
+    return this.http.post(this.baseApiUrl+'Authentication/reset-password-mail',data).pipe(
+      map((response: any) => {
+        let res: Response = response;
+        if (res.statusCode === 200) {
+          return res;
+        } else {
+          return null;
+        }
+      })
+    );
   }
 }

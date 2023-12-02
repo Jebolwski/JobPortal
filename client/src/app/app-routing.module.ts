@@ -5,6 +5,8 @@ import { HomeComponent } from './components/home/home.component';
 import { LoggedService } from './services/logged.service';
 import { NotLoggedService } from './services/notlogged.service';
 import { RegisterComponent } from './components/register/register.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ResetPasswordMailComponent } from './components/reset-password-mail/reset-password-mail.component';
 
 const routes: Routes = [
   {
@@ -23,6 +25,18 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     title: 'Ev',
+    canActivate: [NotLoggedService],
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent,
+    title: 'Şifreyi sıfırla',
+    canActivate: [NotLoggedService],
+  },
+  {
+    path: 'reset-password-mail',
+    component: ResetPasswordMailComponent,
+    title: 'Şifreyi sıfırla mail',
     canActivate: [NotLoggedService],
   },
 ];

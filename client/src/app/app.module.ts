@@ -19,6 +19,8 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyHttpInterceptor } from './interceptors/myhttp.interceptor';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ResetPasswordMailComponent } from './components/reset-password-mail/reset-password-mail.component';
 const JWT_Module_Options: JwtModuleOptions = {
   config: {
     tokenGetter: undefined,
@@ -30,6 +32,8 @@ const JWT_Module_Options: JwtModuleOptions = {
     LoginComponent,
     HomeComponent,
     RegisterComponent,
+    ResetPasswordComponent,
+    ResetPasswordMailComponent,
     
   ],
   imports: [
