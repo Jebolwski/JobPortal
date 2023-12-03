@@ -1,16 +1,56 @@
-<div style="margin-bottom: 10px">google</div>
-<form (submit)="login()" [formGroup]="loginForm">
-  <div>
-    <input type="email" placeholder="email" formControlName="email" />
-  </div>
-  <div>
-    <input type="password" placeholder="şifre" formControlName="password" />
-  </div>
-  <input type="submit" value="Giriş Yap" />
-</form>
 
-<asl-google-signin-button
-  type="icon"
-  size="medium"
-  (click)="externalLogin()"
-></asl-google-signin-button>
+<form class="relative overflow-hidden dark:bg-blue-900 max-h-[100vh] min-h-[100vh]" (submit)="login()" [formGroup]="loginForm">
+  <div class="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-20 lg:py-32 md:px-8">
+    <div class="md:pe-8 md:w-1/2 xl:pe-0 xl:w-5/12">
+      <!-- Title -->
+      <h1 class="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200">
+        Solving problems for every <span class="text-blue-600 dark:text-blue-500">team</span>
+      </h1>
+      <p class="mt-3 text-base text-gray-500">
+        Built on standard web technology, teams use Preline to build beautiful cross-platform hybrid apps in a fraction of the time.
+      </p>
+      <!-- End Title -->
+
+      <div class="mt-8 grid">
+        <div class="flex justify-center">
+          <asl-google-signin-button
+          type="standard"
+          class="block dark:hidden"
+          (click)="externalLogin()"
+          ></asl-google-signin-button>
+          <asl-google-signin-button
+          type="standard"
+          theme="filled_blue"
+          class="dark:block hidden"
+          (click)="externalLogin()"
+          ></asl-google-signin-button>
+        </div>
+      </div>
+
+      <div class="py-6 flex items-center text-sm text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:me-6 after:flex-[1_1_0%] after:border-t after:ms-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
+
+      <!-- Form -->
+      <form>
+
+        <div class="mb-4">
+          <label for="hs-hero-email-2" class="block text-sm font-medium dark:text-white"><span class="sr-only">Email address</span></label>
+          <input type="email" formControlName="email" id="hs-hero-email-2" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 bg-blue-50 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="Email address">
+        </div>
+
+        <div class="mb-4">
+          <label for="hs-hero-password-2" class="block text-sm font-medium dark:text-white"><span class="sr-only">Password</span></label>
+          <input type="password" formControlName="password" id="hs-hero-password-2" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 bg-blue-50 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="Password">
+        </div>
+
+        <div class="grid">
+          <button type="submit" class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Sign up</button>
+        </div>
+      </form>
+      <!-- End Form -->
+    </div>
+  </div>
+
+  <div class="hidden md:block md:absolute md:top-0 md:start-1/2 md:end-0 h-full bg-[url('https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1981&q=80')] bg-no-repeat bg-center bg-cover"></div>
+  <!-- End Col -->
+</form>
+<!-- End Hero -->

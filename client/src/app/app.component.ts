@@ -10,7 +10,9 @@ import jwt_decode from 'jwt-decode';
 export class AppComponent {
   title = 'client';
 
-  constructor(private auth: AuthenticationService) {
+  constructor(public auth: AuthenticationService) {
+    let theme: string | null = localStorage.getItem('theme');
+    this.auth.toggleDarkMode(theme);
     if (localStorage.getItem('accessToken')) {
       let user1: any = jwt_decode(localStorage.getItem('accessToken') || '');
       console.log(user1);

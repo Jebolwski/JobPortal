@@ -19,6 +19,7 @@ export class AuthenticationService {
   public user!: User;
   public user_id!: string;
   private baseApiUrl: string = 'https://localhost:7179/api/';
+  darkMode: string | null = 'false';
   constructor(
     private http: HttpClient,
     private jwtHelper: JwtHelperService,
@@ -175,5 +176,10 @@ export class AuthenticationService {
         }
       })
     );
+  }
+
+  public toggleDarkMode(theme: string | null): void {
+    this.darkMode = theme;
+    localStorage.setItem('theme', theme || 'light');
   }
 }

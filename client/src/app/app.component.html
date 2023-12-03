@@ -1,1 +1,16 @@
+
+<div
+  class="min-h-screen overflow-x-hidden"
+  [class.dark]="auth.darkMode == 'dark'"
+>
+<div
+class="text-red absolute z-10 right-0 bottom-0"
+(click)="
+  auth.darkMode == 'light'
+    ? auth.toggleDarkMode('dark')
+    : auth.toggleDarkMode('light')
+"
+>ronaldo
+</div>
 <router-outlet></router-outlet>
+</div>
