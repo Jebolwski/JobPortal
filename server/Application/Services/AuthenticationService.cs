@@ -533,6 +533,14 @@ namespace JobPortal.Application.Services
             
             User user = (User)responseViewModel.responseModel;
 
+            if (user.googleUserId!=null){
+                return new ResponseViewModel(){
+                    message = "Cant change this accounts password.",
+                    responseModel = new object(),
+                    statusCode = 400
+                };
+            }
+
             if (model.newPassword1!=model.newPassword2){
                 return new ResponseViewModel(){
                     message = "Passwords do not match.",

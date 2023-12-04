@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class ResetPasswordMailComponent {
   constructor(private router: Router,private authService:AuthenticationService,private route: ActivatedRoute){
   }
+  state:boolean = false;
   public resetPasswordMailForm: FormGroup = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -24,9 +25,9 @@ export class ResetPasswordMailComponent {
     this.authService.resetPasswordMail({email:this.resetPasswordMailForm.get('email')?.value||''})
     .subscribe(data =>{
       if (data?.statusCode===200){
-        alert("mail yollandı");
+        this.state=true;
       }else{
-        alert("bir hata oluştu");
+        this.state=false;
       }
     })
   }
