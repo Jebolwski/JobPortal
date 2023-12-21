@@ -1817,11 +1817,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\web\\JobPortal\\server\\JobPortal.csproj",
+      "projectUniqueName": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\web\\JobPortal\\server\\JobPortal\\JobPortal.csproj",
       "projectName": "JobPortal",
-      "projectPath": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\web\\JobPortal\\server\\JobPortal.csproj",
+      "projectPath": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\web\\JobPortal\\server\\JobPortal\\JobPortal.csproj",
       "packagesPath": "C:\\Users\\mertg\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\web\\JobPortal\\server\\obj\\",
+      "outputPath": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\web\\JobPortal\\server\\JobPortal\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mertg\\AppData\\Roaming\\NuGet\\NuGet.Config",

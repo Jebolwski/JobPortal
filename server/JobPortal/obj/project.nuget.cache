@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NsnyIQiZOQu0hFB4LdPkkKvHz6i5tkNPIlulgp/FkKWFV5vLqOCluIaCg31o7EYCsaP25NOY7pD3Rfc3RqB64Q==",
+  "dgSpecHash": "Y84YivWqli3z9BKvYWD0SJcM/tUO1VuOkbCheQuanR7pAkTrxR6iN+cSGpIh9bk1NMXVy/DFXe3HJdRIZDJ0SQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\web\\JobPortal\\server\\JobPortal.csproj",
+  "projectFilePath": "C:\\Users\\mertg\\OneDrive\\Masaüstü\\Dosya\\Programming\\web\\JobPortal\\server\\JobPortal\\JobPortal.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mertg\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\mertg\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\6.0.23\\microsoft.aspnetcore.authentication.google.6.0.23.nupkg.sha512",

@@ -45,9 +45,16 @@ client/node_modules/
 client/.angular/
 client/.vscode/
 client/node_modules/
-server/bin/
+server/JobPortal/bin/
 server/.vs/
-server/JobPortal.csproj
+server/JobPortal/.vs/
+server/JobPortal/obj/
+server/JobPortal.Test/.vs/
+server/JobPortal.Test/bin/
+server/JobPortal.Test/obj/
+server/JobPortal/JobPortal.csproj
+server/JobPortal.Test/JobPortal.Test.csproj
+server/JobPortal.sln
 server/appsettings.json
 
 # Snowpack dependency directory (https://snowpack.dev/)
