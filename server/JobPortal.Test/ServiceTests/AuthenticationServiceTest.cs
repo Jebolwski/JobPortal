@@ -1,16 +1,10 @@
 ﻿using JobPortal.Application.Interfaces;
-using JobPortal.Application.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FakeItEasy;
-using JobPortal.Controllers;
 using JobPortal.Application.ViewModels.ResponseM;
 using JobPortal.Application.ViewModels.AuthM;
 using FluentAssertions;
 using JobPortal.Domain.Entities;
+using JobPortal.Migrations;
 
 namespace JobPortal.Test.ServiceTests
 {
@@ -35,11 +29,22 @@ namespace JobPortal.Test.ServiceTests
             var response = A.Fake<ResponseViewModel>();
             var model = A.Fake<LoginModel>();
             var user = A.Fake<User>();
-            var email = "savdasd";
+            var email = "mertogoko4@gmail.com";
             A.CallTo(() =>  userService.getUserByEmail(email)).Returns(user);
-            var result = authenticationService.Login(model);
 
-            result.Should().BeOfType<ResponseViewModel>();
+            var result = authenticationService.Login(model);
+            result.Should().NotBeNull();
+            
+        }
+
+        [Fact]
+        public void AuthenticationController_Register_ReturnsResponseViewModel()
+        {
+            var response = A.Fake<ResponseViewModel>();
+            var model = A.Fake<RegisterModel>();
+            var result = authenticationService.Register(model);
+            result.Should().NotBeNull();
+            result.statusCode.Should().Be(200);
         }
 
     }
