@@ -20,5 +20,6 @@ namespace JobPortal.Application.Interfaces
         public ResponseViewModel resetPasswordSendMail(ResetPasswordMailModel model);
         public ResponseViewModel resetPasswordCheckJwt(string jwtToken);
         public ResponseViewModel resetPassword(ResetPasswordModel model);
+        public RefreshToken GenerateRefreshToken();
     }
 }

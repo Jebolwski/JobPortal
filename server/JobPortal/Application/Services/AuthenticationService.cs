@@ -181,7 +181,7 @@ namespace JobPortal.Application.Services
             userService.update(user);
         }
 
-        private RefreshToken GenerateRefreshToken()
+        public RefreshToken GenerateRefreshToken()
         {
             var refreshToken = new RefreshToken
             {

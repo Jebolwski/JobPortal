@@ -24,7 +24,7 @@ namespace JobPortal.Test.ServiceTests
         }
 
         [Fact]
-        public void AuthenticationController_Login_ReturnsResponseViewModel()
+        public void AuthenticationService_Login_ReturnsResponseViewModel()
         {
             var response = A.Fake<ResponseViewModel>();
             var model = A.Fake<LoginModel>();
@@ -38,13 +38,24 @@ namespace JobPortal.Test.ServiceTests
         }
 
         [Fact]
-        public void AuthenticationController_Register_ReturnsResponseViewModel()
+        public void AuthenticationService_Register_ReturnsResponseViewModel()
         {
             var response = A.Fake<ResponseViewModel>();
             var model = A.Fake<RegisterModel>();
             var result = authenticationService.Register(model);
             result.Should().NotBeNull();
             result.statusCode.Should().Be(200);
+        }
+
+        [Fact]
+        public void AuthenticationService_GenerateRefreshToken_ReturnsRefreshToken()
+        {
+            var response = A.Fake<RefreshToken>();
+
+            A.CallTo(() => authenticationService.GenerateRefreshToken()).Returns(response);
+            var result = authenticationService.GenerateRefreshToken();
+            result.Created.Should().BeSameDateAs(DateTime.UtcNow);
+            result.Expires.Should().BeSameDateAs(DateTime.UtcNow.AddDays(90));
         }
 
     }
